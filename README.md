@@ -48,7 +48,9 @@ A class is provides which wraps those functions into a convenient interface:
 ```cpp
 struct LittleEnum
 {
-  template <class T> constexpr T fromStr(const char* inputString);
   template <class T> constexpr const char* toStr(const T inputEnum);
+  template <class T> constexpr T fromStr(const char* inputString);
+  template <class T> constexpr T fromStr(const std::string& inputString);
+  template <class T> constexpr T fromStr(const std::string_view& inputString);
 }
 ```
