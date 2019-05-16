@@ -25,7 +25,7 @@ public:
     template <class T>
     static constexpr const char* toStr(const T inputEnum)
     {
-        return enumToStringImplementation(inputEnum);
+        return enumToStringMap(inputEnum);
     }
 
     template <class T>
@@ -139,7 +139,7 @@ for i in range(2,65):
 
 #define LITTLE_ENUM_CLASS_IMPL(name, loop_func_name, ...)                                                                                \
     enum class name { __VA_ARGS__ };                                                                                                     \
-    constexpr const char* enumToStringImplementation(const name e) {                                                                     \
+    constexpr const char* enumToStringMap(const name e) {                                                                     \
         switch (e) {                                                                                                                     \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_CASE_RETURN, name, LITTLE_ENUM_CLASS_DIVIDER_EMPTY, __VA_ARGS__))  \
         }                                                                                                                                \
@@ -148,7 +148,7 @@ for i in range(2,65):
         return {{                                                                                                                        \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_ARRAY_PAIR, name, LITTLE_ENUM_CLASS_DIVIDER_COMMA, __VA_ARGS__))   \
         }}; }                                                                                                                            \
-    std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << LittleEnum::toStr(rhs); }
+    std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << enumToStringMap(rhs); }
 
 #define LITTLE_ENUM_CLASS(name, ...)                                                                                                     \
     LITTLE_ENUM_CLASS_IMPL(name, LITTLE_ENUM_CLASS_STR_CONCAT(LITTLE_ENUM_CLASS_LOOP_, LITTLE_ENUM_CLASS_ARG_COUNT(_NULL_, __VA_ARGS__)), _NULL_, __VA_ARGS__)
