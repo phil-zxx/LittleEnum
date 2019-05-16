@@ -16,9 +16,9 @@ private:
     }
 
     template <class T>
-    struct Enumerator
+    struct StringToEnumMap
     {
-        static constexpr auto range = stringEnumEnumerator(T{});
+        static constexpr auto range = stringToEnumMap(T{});
     };
 
 public:
@@ -31,12 +31,12 @@ public:
     template <class T>
     static constexpr T fromStr(const char* inputString)
     {
-        for (const auto& x : Enumerator<T>::range)
+        for (const auto& x : StringToEnumMap<T>::range)
         {
-            if (LittleEnum::strEqual(x.second, inputString))
-                return x.first;
+            if (LittleEnum::strEqual(x.first, inputString))
+                return x.second;
         }
-        throw;
+        return T::_NULL_;
     }
 
     template <class T>
@@ -64,7 +64,7 @@ public:
 #define LITTLE_ENUM_CLASS_ARG_COUNT(...) LITTLE_ENUM_CLASS_EXPAND(LITTLE_ENUM_CLASS_ARG_COUNT_(__VA_ARGS__,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1))
 
 #define LITTLE_ENUM_CLASS_CASE_RETURN(name, x) case name::x: return #x;
-#define LITTLE_ENUM_CLASS_ARRAY_PAIR(name, x) { name::x, #x}
+#define LITTLE_ENUM_CLASS_ARRAY_PAIR(name, x) { #x, name::x}
 
 /* Python Script to create the below list of macros
 for i in range(2,65):
@@ -144,11 +144,11 @@ for i in range(2,65):
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_CASE_RETURN, name, LITTLE_ENUM_CLASS_DIVIDER_EMPTY, __VA_ARGS__))  \
         }                                                                                                                                \
         return {}; }                                                                                                                     \
-    constexpr std::array<std::pair<name, const char*>, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__)> stringEnumEnumerator(name) {            \
+    constexpr std::array<std::pair<const char*, name>, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__)> stringToEnumMap(name) {            \
         return {{                                                                                                                        \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_ARRAY_PAIR, name, LITTLE_ENUM_CLASS_DIVIDER_COMMA, __VA_ARGS__))   \
         }}; }                                                                                                                            \
     std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << LittleEnum::toStr(rhs); }
 
 #define LITTLE_ENUM_CLASS(name, ...)                                                                                                     \
-    LITTLE_ENUM_CLASS_IMPL(name, LITTLE_ENUM_CLASS_STR_CONCAT(LITTLE_ENUM_CLASS_LOOP_, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__)), __VA_ARGS__)
+    LITTLE_ENUM_CLASS_IMPL(name, LITTLE_ENUM_CLASS_STR_CONCAT(LITTLE_ENUM_CLASS_LOOP_, LITTLE_ENUM_CLASS_ARG_COUNT(_NULL_, __VA_ARGS__)), _NULL_, __VA_ARGS__)
