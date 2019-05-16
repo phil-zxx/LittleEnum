@@ -31,10 +31,10 @@ public:
     template <class T>
     static constexpr T fromStr(const char* inputString)
     {
-        for (const auto& x : StringToEnumMap<T>::range)
+        for (const auto& [strValue, enumValue] : StringToEnumMap<T>::range)
         {
-            if (LittleEnum::strEqual(x.first, inputString))
-                return x.second;
+            if (LittleEnum::strEqual(strValue, inputString))
+                return enumValue;
         }
         return T::_NULL_;
     }
