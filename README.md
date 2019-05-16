@@ -44,13 +44,8 @@ std::ostream& operator<<(std::ostream& os, const Animal& rhs)
 ```
 Functions `enumToStringImplementation` and `stringEnumEnumerator` can be used to convert between enums & strings.
 
-A class is provides which wraps those functions into a convenient interface:
+A global class is provided which wraps those functions into a convenient interface. So one can write e.g.:
 ```cpp
-struct LittleEnum
-{
-  template <class T> constexpr const char* toStr(const T inputEnum);
-  template <class T> constexpr T fromStr(const char* inputString);
-  template <class T> constexpr T fromStr(const std::string& inputString);
-  template <class T> constexpr T fromStr(const std::string_view& inputString);
-}
+const char*  var1 = LittleEnum::toStr(Animal::Horse);    // Gives "Horse"
+const Animal var2 = LittleEnum::fromStr<Animal>("Cat");  // Gives Animal::Cat
 ```
