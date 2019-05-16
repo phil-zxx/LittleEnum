@@ -3,7 +3,6 @@
 #include <array>
 #include <iostream>
 
-
 struct LittleEnum
 {
 private:
@@ -135,7 +134,6 @@ for i in range(2,65):
 #define LITTLE_ENUM_CLASS_LOOP_62(f, n, d, x, ...) f(n,x) d() LITTLE_ENUM_CLASS_EXPAND(LITTLE_ENUM_CLASS_LOOP_61(f, n, d, __VA_ARGS__))
 #define LITTLE_ENUM_CLASS_LOOP_63(f, n, d, x, ...) f(n,x) d() LITTLE_ENUM_CLASS_EXPAND(LITTLE_ENUM_CLASS_LOOP_62(f, n, d, __VA_ARGS__))
 #define LITTLE_ENUM_CLASS_LOOP_64(f, n, d, x, ...) f(n,x) d() LITTLE_ENUM_CLASS_EXPAND(LITTLE_ENUM_CLASS_LOOP_63(f, n, d, __VA_ARGS__))
-
 
 #define LITTLE_ENUM_CLASS_IMPL(name, loop_func_name, ...)                                                                                \
     enum class name { __VA_ARGS__ };                                                                                                     \
