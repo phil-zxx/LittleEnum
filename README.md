@@ -1,11 +1,11 @@
 # LittleEnum
 
 Header-Only Enum Implementation for C++17.
-<br><br><br>
+<br><br>
 
 ### Compiler Support
 Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), on C++17 only.
-<br><br><br>
+<br><br>
 
 ### C++ Example
 The following macro defines an `Animal` enum class:
@@ -14,13 +14,13 @@ The following macro defines an `Animal` enum class:
 
 LITTLE_ENUM_CLASS(Animal, Cat, Dog)
 ```
-
 One can then use a convenient interface to convert between the enum & string values. For example:
 ```cpp
 const char*  var1 = LittleEnum::toStr(Animal::Dog);        // Gives "Dog"
 const Animal var2 = LittleEnum::fromStr<Animal>("Cat");    // Gives Animal::Cat
 const Animal var3 = LittleEnum::fromStr<Animal>("Other");  // Gives Animal::_NULL_
 ```
+<br><br>
 
 ### Macro Expansion
 In full, the macro from the example above is equivalent to / expands to:
@@ -28,7 +28,7 @@ In full, the macro from the example above is equivalent to / expands to:
 #include <array>
 #include <iostream>
 
-enum class Animal { Cat, Dog, Horse }; 
+enum class Animal { Cat, Dog }; 
 
 constexpr const char* enumToStringMap(const Animal e) 
 {
