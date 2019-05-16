@@ -1,4 +1,5 @@
 ﻿cmake_minimum_required (VERSION 3.12)
+project(LittleEnumProject CXX)
 
 add_executable(SampleScript src/sample_script.cpp)
 target_include_directories(SampleScript PRIVATE include/)

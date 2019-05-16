@@ -7,45 +7,48 @@ Header-Only Enum Implementation for C++17.
 Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), on C++17 only.
 <br><br><br>
 
-### Basic C++ Example
+### C++ Example
 The following macro defines an `Animal` enum class:
 ```cpp
 #include <little_enum.hpp>
 
-LITTLE_ENUM_CLASS(Animal, Cat, Dog, Horse);
+LITTLE_ENUM_CLASS(Animal, Cat, Dog)
 ```
-In full, this macro is equivalent to / it expands to:
+
+One can then use a convenient interface to convert between the enum & string values. For example:
+```cpp
+const char*  var1 = LittleEnum::toStr(Animal::Dog);        // Gives "Dog"
+const Animal var2 = LittleEnum::fromStr<Animal>("Cat");    // Gives Animal::Cat
+const Animal var3 = LittleEnum::fromStr<Animal>("Other");  // Gives Animal::_NULL_
+```
+
+### Macro Expansion
+In full, the macro from the example above is equivalent to / expands to:
 ```cpp
 #include <array>
 #include <iostream>
 
 enum class Animal { Cat, Dog, Horse }; 
 
-constexpr const char* enumToStringImplementation(const Animal e) 
+constexpr const char* enumToStringMap(const Animal e) 
 {
   switch (e) 
   {
-  case Animal::Cat:   return "Cat"; 
-  case Animal::Dog:   return "Dog"; 
-  case Animal::Horse: return "Horse";
+  case Animal::_NULL_: return "_NULL_";
+  case Animal::Cat:    return "Cat";
+  case Animal::Dog:    return "Dog";
   } 
   return {}; 
 } 
 
-constexpr std::array<std::pair<Animal, const char*>, 3> stringEnumEnumerator(Animal) 
+constexpr std::array<std::pair<const char*, Animal>, 3> stringToEnumMap(Animal) 
 {
-  return {{ { Animal::Cat, "Cat"}, { Animal::Dog, "Dog"}, { Animal::Horse, "Horse"} }}; 
+  return {{ {"_NULL_", Animal::_NULL_}, {"Cat", Animal::Cat}, {"Dog", Animal::Dog} }}; 
 } 
 
 std::ostream& operator<<(std::ostream& os, const Animal& rhs)
 {
-  return os << LittleEnum::toStr(rhs); 
+  return os << enumToStringMap(rhs); 
 };
 ```
-Functions `enumToStringImplementation` and `stringEnumEnumerator` can be used to convert between enums & strings.
-
-A global class is provided which wraps those functions into a convenient interface. So one can write e.g.:
-```cpp
-const char*  var1 = LittleEnum::toStr(Animal::Horse);    // Gives "Horse"
-const Animal var2 = LittleEnum::fromStr<Animal>("Cat");  // Gives Animal::Cat
-```
+Function `enumToStringMap` is automatically incorporated into `LittleEnum::toStr` and function `stringToEnumMap` is automatically incorporated into `LittleEnum::fromStr`.
