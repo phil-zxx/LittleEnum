@@ -10,6 +10,19 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
+      env:
+        - GPP_COMPILER='g++-7'
+        - GCC_COMPILER='gcc-7'  
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - GPP_COMPILER='g++-8'
+        - GCC_COMPILER='gcc-8'
 
 install:
   # Download & install recent cmake
@@ -22,8 +35,8 @@ install:
     fi
       
 script:
-  - export CC=gcc-7
-  - export CXX=g++-7
+  - export CC=${GPP_COMPILER}
+  - export CXX=${GCC_COMPILER}
   - cmake --version
   - cmake CMakeLists.txt
   - make
