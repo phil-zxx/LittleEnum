@@ -7,14 +7,14 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
+            - llvm-toolchain-trusty-7.0
           packages:
-            - clang-6.0
-            - libstdc++6
+            - clang-7.0
+            - libstdc++7
             - libpng-dev
       env:
-        - GPP_COMPILER='clang++-6.0'
-        - GCC_COMPILER='clang-6.0'
+        - GPP_COMPILER='clang++-7.0'
+        - GCC_COMPILER='clang-7.0'
 #     - os: linux
 #       addons:
 #         apt:
