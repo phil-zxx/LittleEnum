@@ -10,7 +10,7 @@ matrix:
             - llvm-toolchain-trusty-8
           packages:
             - clang-8
-            - libstdc++8	
+            - libstdc++6	
             - libpng-dev
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
