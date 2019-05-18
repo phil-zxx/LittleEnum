@@ -1,58 +1,15 @@
 language: cpp
-dist: xenial
-
-common_sources: &all_sources
-  - ubuntu-toolchain-r-test
-  - llvm-toolchain-xenial
-  - llvm-toolchain-xenial-4.0
-  - llvm-toolchain-xenial-5.0
-  - llvm-toolchain-xenial-6.0
-#  - llvm-toolchain-xenial-7.0
-
+compiler: gcc
 
 matrix:
   include:
     - os: linux
-      compiler: clang
-      addons:
-          apt:
-              sources: *all_sources
-              packages: ['clang-6.0', 'libc++-dev']
-      env:
-        - COMPILER='clang++-6.0'
-        - CONAN_COMP='clang'
-        - CONAN_COMPV='6.0'
-        - CONAN_LIBCXX=libc++
-#    - os: linux
-#      compiler: clang
-#      addons:
-#          apt:
-#              sources: *all_sources
-#              packages: ['clang-7.0']
-#      env:
-#        - COMPILER='clang++-7.0'
-#        - CONAN_COMP='clang'
-#        - CONAN_COMPV='7.0'
-    - os: linux
-      compiler: gcc
       addons:
         apt:
-          sources: *all_sources
-          packages: ['g++-7']
-      env:
-        - COMPILER='g++-7'
-        - CONAN_COMP='gcc'
-        - CONAN_COMPV='7'
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources: *all_sources
-          packages: ['g++-8']
-      env:
-        - COMPILER='g++-8'
-        - CONAN_COMP='gcc'
-        - CONAN_COMPV='8'
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
 
 install:
   # Download & install recent cmake
@@ -64,16 +21,9 @@ install:
       export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
     fi
       
-before_script:
-  - export CXX=${COMPILER}
-  - cd ${TRAVIS_BUILD_DIR}
-  - mkdir -p cmake-build-release
-  
-  - install -s build_type=Release -s compiler=${CONAN_COMP} -s compiler.version=${CONAN_COMPV} -s compiler.libcxx=${CONAN_LIBCXX:-libstdc++} -if cmake-build-release --build missing test
-
-  - cmake -Htest -Bcmake-build-release -DCMAKE_BUILD_TYPE=Release
-
 script:
-  - cd ../cmake-build-release
-  - make
-
+  - export CC=gcc-7
+  - export CXX=g++-7
+  - cmake --version
+  - cmake CMakeLists.txt
+  - cmake --build . --target LittleEnumProject
