@@ -35,8 +35,8 @@ install:
     fi
       
 script:
-  - export CC=${GPP_COMPILER}
-  - export CXX=${GCC_COMPILER}
+  - export CC=${GCC_COMPILER}
+  - export CXX=${GPP_COMPILER}
   - cmake --version
   - cmake CMakeLists.txt
   - make
