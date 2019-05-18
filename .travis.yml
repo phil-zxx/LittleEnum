@@ -10,8 +10,8 @@ matrix:
           packages:
             - clang-6.0
       env:
-        - GPP_COMPILER='clang++-6.0'
-        - GCC_COMPILER='clang-6.0'
+        - GPP_COMPILER='clang++-7.0'
+        - GCC_COMPILER='clang-7.0'
     - os: linux
       addons:
         apt:
