@@ -30,25 +30,25 @@ In full, the macro from the example above is equivalent to / expands to:
 
 enum class Animal { Cat, Dog }; 
 
-constexpr const char* enumToStringMap(const Animal e) 
+constexpr const char* _littleEnum_EnumToStrMap(const Animal e) 
 {
   switch (e) 
   {
-  case Animal::_NULL_: return "_NULL_";
   case Animal::Cat:    return "Cat";
   case Animal::Dog:    return "Dog";
+  case Animal::_NULL_: return "_NULL_";
   } 
   return {}; 
 } 
 
-constexpr std::array<std::pair<const char*, Animal>, 3> stringToEnumMap(Animal) 
+constexpr std::array<std::pair<const char*, Animal>, 3> _littleEnum_StrToEnumMap(Animal) 
 {
-  return {{ {"_NULL_", Animal::_NULL_}, {"Cat", Animal::Cat}, {"Dog", Animal::Dog} }}; 
+  return {{ {"Cat", Animal::Cat}, {"Dog", Animal::Dog}, {"_NULL_", Animal::_NULL_} }}; 
 } 
 
 std::ostream& operator<<(std::ostream& os, const Animal& rhs)
 {
-  return os << enumToStringMap(rhs); 
+  return os << _littleEnum_EnumToStrMap(rhs); 
 };
 ```
-Function `enumToStringMap` is automatically incorporated into `LittleEnum::toStr` and function `stringToEnumMap` is automatically incorporated into `LittleEnum::fromStr`.
+Function `_littleEnum_EnumToStrMap` and `_littleEnum_StrToEnumMap` are automatically incorporated into `LittleEnum::toStr` and `LittleEnum::fromStr`, respectively.
