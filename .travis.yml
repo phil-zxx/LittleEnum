@@ -27,4 +27,3 @@ script:
   - cmake --version
   - cmake CMakeLists.txt
   - make
-  - make LittleEnumProject
