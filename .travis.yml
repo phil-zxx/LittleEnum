@@ -3,17 +3,16 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: trusty    
-      compiler: gcc      
-      env: CPP=17 GCC=7
-      name: c++17, gcc 7
+      compiler: gcc
       addons:
         apt:
-          packages:
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-     
+          sources: ubuntu-toolchain-r-test
+          packages: ['g++-8']
+      env:
+        - COMPILER='g++-8'
+        - CONAN_COMP='gcc'
+        - CONAN_COMPV='8'
+        
 install:
     - echo "Current Path:" ${PATH}
     - echo "C++ Compiler:" ${CXX}
