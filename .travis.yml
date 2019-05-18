@@ -6,34 +6,33 @@ matrix:
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-8
           packages:
             - clang-8
       env:
-        - GPP_COMPILER='clang++-8'
-        - GCC_COMPILER='clang-8'
-#     - os: linux
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-7
-#       env:
-#         - GPP_COMPILER='g++-7'
-#         - GCC_COMPILER='gcc-7'
-#     - os: linux
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-8
-#       env:
-#         - GPP_COMPILER='g++-8'
-#         - GCC_COMPILER='gcc-8'
+        - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+          - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
 
+before_install:
+    - eval "${MATRIX_EVAL}"
+    
 install:
   # Download & install recent cmake
   - |
@@ -45,8 +44,6 @@ install:
     fi
       
 script:
-  - export CC=${GCC_COMPILER}
-  - export CXX=${GPP_COMPILER}
   - cmake --version
   - cmake CMakeLists.txt
   - make
