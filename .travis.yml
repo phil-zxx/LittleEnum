@@ -9,9 +9,7 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-8
           packages:
-            - clang-8.0
-            - libstdc++8
-            - libpng-dev
+            - clang-8
       env:
         - GPP_COMPILER='clang++-8.0'
         - GCC_COMPILER='clang-8.0'
