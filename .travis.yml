@@ -1,23 +1,7 @@
 language: cpp
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty    
-      compiler: gcc      
-      env: CPP=17 GCC=7
-      name: c++17, gcc 7
-      addons:
-        apt:
-          packages:
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
-    
-before_install:
-    # Combine global build options with OS/compiler-dependent options
-    - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
-    - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
+compiler:
+  - gcc
      
 install:
     - echo ${PATH}
@@ -30,7 +14,7 @@ install:
       if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
         CMAKE_URL="http://www.cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.tar.gz"
         mkdir -p ${TRAVIS_BUILD_DIR}/cmake_3_14
-        travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
+        travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${TRAVIS_BUILD_DIR}/cmake_3_14
         export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
       fi
       
