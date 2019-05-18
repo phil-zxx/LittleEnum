@@ -1,4 +1,5 @@
-# LittleEnum
+# LittleEnum ![Build Status](https://api.travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)
+
 Header-Only Enum Implementation for C++17.
 
 ### Compiler Support
