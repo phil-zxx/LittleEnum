@@ -1,37 +1,193 @@
 language: cpp
+dist: xenial
+
+common_sources: &all_sources
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-xenial
+  - llvm-toolchain-xenial-4.0
+  - llvm-toolchain-xenial-5.0
+  - llvm-toolchain-xenial-6.0
+#  - llvm-toolchain-xenial-7.0
+
 
 matrix:
   include:
     - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-4.0']
+      env:
+        - COMPILER='clang++-4.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='4.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-4.0', 'libc++-dev']
+      env:
+        - COMPILER='clang++-4.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='4.0'
+        - CONAN_LIBCXX=libc++
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-5.0']
+      env:
+        - COMPILER='clang++-5.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='5.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-5.0', 'libc++-dev']
+      env:
+        - COMPILER='clang++-5.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='5.0'
+        - CONAN_LIBCXX=libc++
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-6.0', 'libstdc++-6-dev']
+      env:
+        - COMPILER='clang++-6.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='6.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-6.0', 'libstdc++-7-dev']
+      env:
+        - COMPILER='clang++-6.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='6.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-6.0', 'libstdc++-8-dev']
+      env:
+        - COMPILER='clang++-6.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='6.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+              sources: *all_sources
+              packages: ['clang-6.0', 'libc++-dev']
+      env:
+        - COMPILER='clang++-6.0'
+        - CONAN_COMP='clang'
+        - CONAN_COMPV='6.0'
+        - CONAN_LIBCXX=libc++
+
+
+#    - os: linux
+#      compiler: clang
+#      addons:
+#          apt:
+#              sources: *all_sources
+#              packages: ['clang-7.0']
+#      env:
+#        - COMPILER='clang++-7.0'
+#        - CONAN_COMP='clang'
+#        - CONAN_COMPV='7.0'
+
+    - os: linux
       compiler: gcc
       addons:
         apt:
-          sources: ubuntu-toolchain-r-test
+          sources: *all_sources
+          packages: ['g++-5', 'libstdc++-6-dev']
+      env:
+        - COMPILER='g++-5'
+        - CONAN_COMP='gcc'
+        - CONAN_COMPV='5'
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['g++-6']
+      env:
+        - COMPILER='g++-6'
+        - CONAN_COMP='gcc'
+        - CONAN_COMPV='6'
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['g++-7']
+      env:
+        - COMPILER='g++-7'
+        - CONAN_COMP='gcc'
+        - CONAN_COMPV='7'
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
           packages: ['g++-8']
       env:
         - COMPILER='g++-8'
         - CONAN_COMP='gcc'
         - CONAN_COMPV='8'
-        
+
 install:
-    - echo "Current Path:" ${PATH}
-    - echo "C++ Compiler:" ${CXX}
-    - ${CXX} --version
-    - ${CXX} -v
-    
-    # Download & install recent cmake
-    - |
-      if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
-        CMAKE_URL="http://www.cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.tar.gz"
-        mkdir -p ${TRAVIS_BUILD_DIR}/cmake_3_14
-        travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${TRAVIS_BUILD_DIR}/cmake_3_14
-        export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
-      fi
+  - pip install --user conan
+  - conan user
+  # Download & install recent cmake
+  - |
+    if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
+      CMAKE_URL="http://www.cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.tar.gz"
+      mkdir -p ${TRAVIS_BUILD_DIR}/cmake_3_14
+      travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${TRAVIS_BUILD_DIR}/cmake_3_14
+      export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
+    fi
       
+before_script:
+  - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+  - mkdir -p cmake-build-debug && mkdir -p cmake-build-release
+
+  - conan install -s build_type=Debug -s compiler=${CONAN_COMP} -s compiler.version=${CONAN_COMPV} -s compiler.libcxx=${CONAN_LIBCXX:-libstdc++} -if cmake-build-debug --build missing test
+  - conan install -s build_type=Release -s compiler=${CONAN_COMP} -s compiler.version=${CONAN_COMPV} -s compiler.libcxx=${CONAN_LIBCXX:-libstdc++} -if cmake-build-release --build missing test
+
+  - cmake -Htest -Bcmake-build-debug -DCMAKE_BUILD_TYPE=Debug
+  - cmake -Htest -Bcmake-build-release -DCMAKE_BUILD_TYPE=Release
+
 script:
-    # Build main & tests
-     - mkdir -p build
-     - cd build
-     - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON .. 
-     - make
-     - make LittleEnumProject
+  - cd cmake-build-debug
+  - make
+  - ctest -V
+#  - for t in $(ls wise_enum_test*) ; do ./$t -r junit > ../$t-debug.xml ; done
+  - cd ../cmake-build-release
+  - make
+  - ctest -V
+#  - for t in $(ls wise_enum_test*) ; do ./$t -r junit > ../$t-release.xml ; done
