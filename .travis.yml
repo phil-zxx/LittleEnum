@@ -10,8 +10,8 @@ matrix:
             - llvm-toolchain-trusty-6.0
           packages:
             - clang-6.0
-          - libstdc++6
-          - libpng-dev
+            - libstdc++6
+            - libpng-dev
       env:
         - GPP_COMPILER='clang++-6.0'
         - GCC_COMPILER='clang-6.0'
