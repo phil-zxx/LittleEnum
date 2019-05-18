@@ -8,7 +8,7 @@ matrix:
           sources:
             - llvm-toolchain-xenial-7
           packages:
-            - clang-6.0
+            - clang-7.0
       env:
         - GPP_COMPILER='clang++-7.0'
         - GCC_COMPILER='clang-7.0'
