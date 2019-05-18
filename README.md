@@ -1,14 +1,8 @@
 # LittleEnum
-
 Header-Only Enum Implementation for C++17.
-<br><br>
-
----
-<br>
 
 ### Compiler Support
 Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), for C++17 only.
-<br><br>
 
 ### C++ Example
 The following macro defines an `Animal` enum class:
@@ -23,7 +17,6 @@ const char*  var1 = LittleEnum::toStr(Animal::Dog);        // Gives "Dog"
 const Animal var2 = LittleEnum::fromStr<Animal>("Cat");    // Gives Animal::Cat
 const Animal var3 = LittleEnum::fromStr<Animal>("Other");  // Gives Animal::_NULL_
 ```
-<br>
 
 ### Macro Expansion
 In full, the macro from the example above is equivalent to / expands to:
