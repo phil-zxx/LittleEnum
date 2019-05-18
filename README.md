@@ -1,10 +1,12 @@
 # LittleEnum
 
 Header-Only Enum Implementation for C++17.
-<br><br>
+
+---
+
 
 ### Compiler Support
-Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), on C++17 only.
+Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), for C++17 only.
 <br><br>
 
 ### C++ Example
@@ -32,23 +34,23 @@ enum class Animal { Cat, Dog };
 
 constexpr const char* _littleEnum_EnumToStrMap(const Animal e) 
 {
-  switch (e) 
-  {
-  case Animal::Cat:    return "Cat";
-  case Animal::Dog:    return "Dog";
-  case Animal::_NULL_: return "_NULL_";
-  } 
-  return {}; 
+    switch (e) 
+    {
+    case Animal::Cat:    return "Cat";
+    case Animal::Dog:    return "Dog";
+    case Animal::_NULL_: return "_NULL_";
+    } 
+    return {}; 
 } 
 
 constexpr std::array<std::pair<const char*, Animal>, 3> _littleEnum_StrToEnumMap(Animal) 
 {
-  return {{ {"Cat", Animal::Cat}, {"Dog", Animal::Dog}, {"_NULL_", Animal::_NULL_} }}; 
+    return {{ {"Cat", Animal::Cat}, {"Dog", Animal::Dog}, {"_NULL_", Animal::_NULL_} }}; 
 } 
 
 std::ostream& operator<<(std::ostream& os, const Animal& rhs)
 {
-  return os << _littleEnum_EnumToStrMap(rhs); 
+    return os << _littleEnum_EnumToStrMap(rhs); 
 };
 ```
 Function `_littleEnum_EnumToStrMap` and `_littleEnum_StrToEnumMap` are automatically incorporated into `LittleEnum::toStr` and `LittleEnum::fromStr`, respectively.
