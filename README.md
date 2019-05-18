@@ -54,4 +54,4 @@ std::ostream& operator<<(std::ostream& os, const Animal& rhs)
     return os << _littleEnum_EnumToStrMap(rhs); 
 };
 ```
-Function `_littleEnum_EnumToStrMap` and `_littleEnum_StrToEnumMap` are automatically incorporated into `LittleEnum::toStr` and `LittleEnum::fromStr`, respectively.
+Functions `_littleEnum_EnumToStrMap` and `_littleEnum_StrToEnumMap` are automatically incorporated into `LittleEnum::toStr` and `LittleEnum::fromStr`, respectively.
