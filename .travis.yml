@@ -1,5 +1,4 @@
 language: cpp
-compiler: gcc
 
 matrix:
   include:
@@ -9,10 +8,10 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - clang-7.0
+            - clang-6.0
       env:
-        - GPP_COMPILER='clang++-7.0'
-        - GCC_COMPILER='clang-7.0'
+        - GPP_COMPILER='clang++-6.0'
+        - GCC_COMPILER='clang-6.0'
     - os: linux
       addons:
         apt:
