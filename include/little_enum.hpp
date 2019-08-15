@@ -143,7 +143,7 @@ for i in range(2,65):
         return {{                                                                                                                        \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_ARRAY_PAIR, name, LITTLE_ENUM_CLASS_DIVIDER_COMMA, __VA_ARGS__))   \
         }}; }                                                                                                                            \
-    std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << _littleEnum_EnumToStrMap(rhs); }
+    inline std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << _littleEnum_EnumToStrMap(rhs); }
 
 #define LITTLE_ENUM_CLASS(name, ...)                                                                                                     \
     LITTLE_ENUM_CLASS_IMPL(name, LITTLE_ENUM_CLASS_STR_CONCAT(LITTLE_ENUM_CLASS_LOOP_, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__, _NULL_)), __VA_ARGS__, _NULL_)
