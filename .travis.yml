@@ -25,7 +25,7 @@ matrix:
 
 before_install:
     - eval "${MATRIX_EVAL}"
-    
+
 install:
   # Download & install recent cmake
   - |
@@ -35,9 +35,10 @@ install:
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${TRAVIS_BUILD_DIR}/cmake_3_14
       export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
     fi
-      
+
 script:
-  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
+  - |
+    if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
       cmake --version
       cmake CMakeLists.txt
       make
