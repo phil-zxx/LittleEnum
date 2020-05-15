@@ -42,6 +42,12 @@ install:
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${TRAVIS_BUILD_DIR}/cmake_3_14
       export PATH=${TRAVIS_BUILD_DIR}/cmake_3_14/bin:${PATH}
     fi
+  - |
+    if [[ ${TRAVIS_OS_NAME} == "windows" ]]; then
+      choco install visualstudio2019community
+      choco install visualstudio2019-workload-nativedesktop
+      export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
+    fi
 
 script:
   - |
@@ -54,6 +60,6 @@ script:
     if [[ ${TRAVIS_OS_NAME} == "windows" ]]; then
        mkdir build
        cd build
-       cmake .. -G "Visual Studio 16 2019"
+       cmake .. -G "Visual Studio 16 2019" -A x64
        cmake --build .
     fi
