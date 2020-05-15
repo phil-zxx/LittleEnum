@@ -1,10 +1,10 @@
-# LittleEnum ![Build Status](https://api.travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)
+# LittleEnum [![Build Status](https://travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)](https://travis-ci.com/phil-zxx/LittleEnum)
 Header-Only Enum Implementation for C++17.
 
 ---
 
 ### Compiler Support
-Successfully tested on `g++ 8.3.0` (CYGWIN 3.0.7) and `CL 19.20.27508.1` (MSVC 2019), for C++17 only.
+Successfully tested on `GCC`, `Clang` and `MSVC`, for C++17 only.
 
 ---
 
