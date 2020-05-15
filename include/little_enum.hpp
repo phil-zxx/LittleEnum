@@ -6,7 +6,6 @@
 struct LittleEnum
 {
 private:
-#ifndef _MSC_VER 
     static constexpr bool strEqual(const char* lhs, const char* rhs)
     {
         while (*lhs && (*lhs == *rhs))
@@ -17,7 +16,7 @@ private:
 
     template <class T>
     static constexpr auto StringToEnumMap = _littleEnum_StrToEnumMap(T{});
-#endif
+
 public:
     template <class T>
     static constexpr const char* toStr(const T inputEnum)
@@ -51,7 +50,7 @@ public:
 
 #define LITTLE_ENUM_CLASS_EXPAND(x) x
 
-#define LITTLE_ENUM_CLASS_DIVIDER_EMPTY() 
+#define LITTLE_ENUM_CLASS_DIVIDER_EMPTY()
 #define LITTLE_ENUM_CLASS_DIVIDER_COMMA() ,
 
 #define LITTLE_ENUM_CLASS_STR_CONCAT(a, ...) LITTLE_ENUM_CLASS_STR_CONCAT_(a, __VA_ARGS__)
@@ -135,12 +134,12 @@ for i in range(2,65):
 
 #define LITTLE_ENUM_CLASS_IMPL(name, loop_func_name, ...)                                                                                \
     enum class name { __VA_ARGS__ };                                                                                                     \
-    constexpr const char* _littleEnum_EnumToStrMap(const name e) {                                                                                \
+    constexpr const char* _littleEnum_EnumToStrMap(const name e) {                                                                       \
         switch (e) {                                                                                                                     \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_CASE_RETURN, name, LITTLE_ENUM_CLASS_DIVIDER_EMPTY, __VA_ARGS__))  \
         }                                                                                                                                \
         return {}; }                                                                                                                     \
-    constexpr std::array<std::pair<const char*, name>, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__)> _littleEnum_StrToEnumMap(name) {                 \
+    constexpr std::array<std::pair<const char*, name>, LITTLE_ENUM_CLASS_ARG_COUNT(__VA_ARGS__)> _littleEnum_StrToEnumMap(name) {        \
         return {{                                                                                                                        \
             LITTLE_ENUM_CLASS_EXPAND(loop_func_name(LITTLE_ENUM_CLASS_ARRAY_PAIR, name, LITTLE_ENUM_CLASS_DIVIDER_COMMA, __VA_ARGS__))   \
         }}; }                                                                                                                            \
