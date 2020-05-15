@@ -13,6 +13,6 @@ int main()
 
     const Animal val3 = LittleEnum::fromStr<Animal>("SomeUnknownString");
     std::cout << "3) This enum prints to '" << LittleEnum::toStr(val3) << "'" << std::endl;
-    
+
     return 0;
 }
