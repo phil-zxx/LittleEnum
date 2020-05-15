@@ -2,7 +2,7 @@ language: cpp
 
 matrix:
   include:
-    - name: "Linux (clang 10)"
+    - name: "Linux (Clang 10)"
       os: linux
       addons:
         apt:
@@ -16,7 +16,7 @@ matrix:
             - libstdc++-9-dev
       env:
         - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
-    - name: "Linux (g++ 9)"
+    - name: "Linux (GCC 9)"
       os: linux
       addons:
         apt:
@@ -35,7 +35,6 @@ before_install:
     - eval "${MATRIX_EVAL}"
 
 install:
-  # Download & install recent cmake
   - |
     if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
       CMAKE_URL="http://www.cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.tar.gz"
@@ -55,6 +54,6 @@ script:
     if [[ ${TRAVIS_OS_NAME} == "windows" ]]; then
        mkdir build
        cd build
-       cmake .. -G "Visual Studio 15 2017 Win64"
+       cmake .. -G "Visual Studio 16 2019 Win64"
        cmake --build .
     fi
