@@ -22,6 +22,9 @@ matrix:
             - g++-9
       env:
           - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+    - os: windows
+      language: cpp
+      env: VS15=true
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -42,4 +45,11 @@ script:
       cmake --version
       cmake CMakeLists.txt
       make
+    fi
+  - |
+    if [[ ${TRAVIS_OS_NAME} == "windows" ]]; then
+       mkdir build
+       cd build
+       cmake .. -G "Visual Studio 15 2017 Win64"
+       cmake --build .
     fi
