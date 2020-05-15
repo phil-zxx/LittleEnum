@@ -26,7 +26,7 @@ matrix:
             - g++-9
       env:
           - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
-    - name: "Windows (MSVC 2019)"
+    - name: "Windows (MSVC 2017)"
       os: windows
       language: cpp
       env: VS17=true
