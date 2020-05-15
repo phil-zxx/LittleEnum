@@ -2,7 +2,8 @@ language: cpp
 
 matrix:
   include:
-    - os: linux
+    - name: "Linux (clang 10)"
+      os: linux
       addons:
         apt:
           sources:
@@ -15,7 +16,8 @@ matrix:
             - libstdc++-9-dev
       env:
         - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
-    - os: linux
+    - name: "Linux (g++ 9)"
+      os: linux
       addons:
         apt:
           sources:
@@ -24,7 +26,8 @@ matrix:
             - g++-9
       env:
           - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
-    - os: windows
+    - name: "Windows (MSVC 2017)"
+      os: windows
       language: cpp
       env: VS15=true
 
