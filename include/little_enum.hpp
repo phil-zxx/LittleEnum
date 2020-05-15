@@ -6,6 +6,7 @@
 struct LittleEnum
 {
 private:
+#ifndef _MSC_VER 
     static constexpr bool strEqual(const char* lhs, const char* rhs)
     {
         while (*lhs && (*lhs == *rhs))
@@ -16,7 +17,7 @@ private:
 
     template <class T>
     static constexpr auto StringToEnumMap = _littleEnum_StrToEnumMap(T{});
-    
+#endif
 public:
     template <class T>
     static constexpr const char* toStr(const T inputEnum)
