@@ -1,11 +1,9 @@
 #include <little_enum.hpp>
-#include <iostream>
+#include <mini_testing_framework.hpp>
 
 LITTLE_ENUM_CLASS(Animal, Cat = -2, Dog = 99, Horse = 5, Rabbit, __NULL__)
 LITTLE_ENUM_CLASS(TenorUnit, D, B, W, M, Y, C, I)
 LITTLE_ENUM_CLASS_WITH_TYPE(PutCallFlag, char, Call = 'C', Put = 'P')
-
-#define CHECK(val) if ((val) == false) throw std::runtime_error("Expression " #val " is false")
 
 int main()
 {
@@ -104,7 +102,7 @@ int main()
         static_assert(Enum::toSv(TenorUnit::Y) == "Y");
         static_assert(Enum::toSv(TenorUnit::C) == "C");
         static_assert(Enum::toSv(TenorUnit::I) == "I");
-        
+
         static_assert(Enum::toValue(TenorUnit::D) == 0);
         static_assert(Enum::toValue(TenorUnit::B) == 1);
         static_assert(Enum::toValue(TenorUnit::W) == 2);
