@@ -146,6 +146,11 @@ int main()
         static_assert(std::is_same_v<int,  std::underlying_type_t<PutCallFlag>> == false);
         static_assert(std::is_same_v<char, std::underlying_type_t<PutCallFlag>> == true);
 
+        std::ostringstream os;
+        os << PutCallFlag::Call << " and " << PutCallFlag::Put;
+        CHECK(os.str() == "Call and Put");
+
+
         std::cout << "All good\n";
         return 0;
     }

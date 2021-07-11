@@ -112,7 +112,7 @@ namespace little_enum {
 
         // Converts char to enum value
         template <class E>
-        static constexpr E fromChar(const char& inputChar) {
+        static constexpr E fromChar(const char inputChar) {
             for (const auto& p : Enum::enum_array_v<E>) {
                 if (p.name.size() == 1 && p.name.front() == inputChar)
                     return p.value;
@@ -220,7 +220,7 @@ for i in range(2, 65) :
     template<> constexpr auto little_enum::Enum::enum_array<name>() {                                                       \
         return std::array<little_enum::Enum::Pair<name>, LITTLE_ENUM_ARG_COUNT(__VA_ARGS__)>{little_enum::Enum::Pair<name>  \
             LITTLE_ENUM_EXPAND(loop_func_name(LITTLE_ENUM_ARRAY_PAIR, name, LITTLE_ENUM_COMMA, __VA_ARGS__)) }; }           \
-    inline std::ostream& operator<<(std::ostream& os, const name& x) { return os << little_enum::Enum::toSv(x); }
+    inline std::ostream& operator<<(std::ostream& os, const name& rhs) { return os << little_enum::Enum::toSv(rhs); }
 
 #define LITTLE_ENUM_CLASS(name, ...) enum class name { __VA_ARGS__ };  \
     LITTLE_ENUM_IMPL(name, LITTLE_ENUM_STR_CONCAT(LITTLE_ENUM_LOOP_, LITTLE_ENUM_ARG_COUNT(__VA_ARGS__)), __VA_ARGS__)

@@ -1,5 +1,5 @@
 # LittleEnum [![Build Status](https://travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)](https://travis-ci.com/phil-zxx/LittleEnum)
-Header-Only Enum Implementation for C++17.
+Header-Only Smart Enum Implementation for C++17.
 
 ---
 
@@ -13,44 +13,64 @@ The following macro defines an `Animal` enum class:
 ```cpp
 #include <little_enum.hpp>
 
-LITTLE_ENUM_CLASS(Animal, Cat, Dog)
+LITTLE_ENUM_CLASS(Animal, Dog, Hamster = 99, Cat, Horse = -123);
 ```
-One can then use a convenient interface to convert between the enum & string values. For example:
+Below is some sample usage via the provided interface functions:
 ```cpp
-const char*  var1 = LittleEnum::toStr(Animal::Dog);        // Gives "Dog"
-const Animal var2 = LittleEnum::fromStr<Animal>("Cat");    // Gives Animal::Cat
-const Animal var3 = LittleEnum::fromStr<Animal>("Other");  // Gives Animal::_NULL_
+using namespace little_enum;
+
+const Animal      a = Enum::fromStr<Animal>("Cat");  // Converts string "Cat" to the actual enum value Animal::Cat
+const std::string b = Enum::toStr(Animal::Hamster);  // Converts enum value Animal::Hamster to string "Hamster"
+const int         c = Enum::toValue(Animal::Horse);  // Converts enum value Animal::Horse to the underlying int value -123
+
+const size_t      d = Enum::count<Animal>();         // Gives the number of available Animal enum values, which is 4 
+
+std::cout << "Value: " << Animal::Dog;               // Gives "Value: Dog", via operator<<(std::ostream&, const Animal&)
 ```
 
 ---
 
-### Macro Expansion
-In full, the macro from the example above is equivalent to / expands to:
+### Available Functions
+Below is a list of all functions provided by helper class `Enum`:
 ```cpp
-#include <array>
-#include <iostream>
+// Returns a std::array of {name, value} pairs for the specified enum type
+template <class E>
+static constexpr std::array getValuePairs()
 
-enum class Animal { Cat, Dog }; 
+// Returns the number of available enum values
+template <class E>
+static constexpr size_t count()
 
-constexpr const char* _littleEnum_EnumToStrMap(const Animal e) 
-{
-    switch (e) 
-    {
-    case Animal::Cat:    return "Cat";
-    case Animal::Dog:    return "Dog";
-    case Animal::_NULL_: return "_NULL_";
-    } 
-    return {}; 
-} 
+// Converts enum value to std::string_view
+template <class E>
+static constexpr std::string_view toSv(const E inputEnum)
 
-constexpr std::array<std::pair<const char*, Animal>, 3> _littleEnum_StrToEnumMap(Animal) 
-{
-    return {{ {"Cat", Animal::Cat}, {"Dog", Animal::Dog}, {"_NULL_", Animal::_NULL_} }}; 
-} 
+// Converts enum value to std::string
+template <class E>
+static std::string toStr(const E inputEnum)
 
-std::ostream& operator<<(std::ostream& os, const Animal& rhs)
-{
-    return os << _littleEnum_EnumToStrMap(rhs); 
-};
+// Converts enum value to underlying type value
+template <class E>
+static constexpr std::underlying_type_t<E> toValue(const E inputEnum)
+
+// Converts std::string_view to enum value
+template <class E>
+static constexpr E fromSv(const std::string_view& inputSv)
+
+// Converts std::string to enum value
+template <class E>
+static E fromStr(const std::string& inputStr)
+
+// Converts char to enum value
+template <class E>
+static constexpr E fromChar(const char inputChar)
+
+// Returns the opposite enum value (only works for enums with exactly 2 values)
+template <class E>
+static constexpr E flip(const E inputEnum)
 ```
-Functions `_littleEnum_EnumToStrMap` and `_littleEnum_StrToEnumMap` are automatically incorporated into `LittleEnum::toStr` and `LittleEnum::fromStr`, respectively.
+Additionally, the following free function is provided for each enum type `E`:
+```cpp
+// Outputs the string value of the input enum to the stream
+std::ostream& operator<<(std::ostream& os, const E& inputEnum)
+```

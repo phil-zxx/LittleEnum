@@ -1,4 +1,4 @@
-#include <iostream>
+#include <sstream>
 
 #define CHECK(val) if ((val) == false) throw std::runtime_error("Expression " #val " is false")
 
