@@ -13,13 +13,6 @@ int main()
     {
         static_assert(Enum::count<Animal>() == 6);
 
-        static_assert(Enum::fromCharArr<Animal>("Cat")      == Animal::Cat);
-        static_assert(Enum::fromCharArr<Animal>("Dog")      == Animal::Dog);
-        static_assert(Enum::fromCharArr<Animal>("Horse")    == Animal::Horse);
-        static_assert(Enum::fromCharArr<Animal>("Rabbit")   == Animal::Rabbit);
-        static_assert(Enum::fromCharArr<Animal>("Koala")    == Animal::Koala);
-        static_assert(Enum::fromCharArr<Animal>("__NULL__") == Animal::__NULL__);
-
         CHECK(Enum::fromStr<Animal>("Cat")      == Animal::Cat);
         CHECK(Enum::fromStr<Animal>("Dog")      == Animal::Dog);
         CHECK(Enum::fromStr<Animal>("Horse")    == Animal::Horse);
@@ -81,15 +74,6 @@ int main()
         static_assert(Enum::fromChar<TenorUnit>('I') == TenorUnit::I);
         static_assert(Enum::fromChar<TenorUnit>('I') != TenorUnit::I2);
 
-        static_assert(Enum::fromCharArr<TenorUnit>("D")  == TenorUnit::D);
-        static_assert(Enum::fromCharArr<TenorUnit>("B")  == TenorUnit::B);
-        static_assert(Enum::fromCharArr<TenorUnit>("W")  == TenorUnit::W);
-        static_assert(Enum::fromCharArr<TenorUnit>("M")  == TenorUnit::M);
-        static_assert(Enum::fromCharArr<TenorUnit>("Y")  == TenorUnit::Y);
-        static_assert(Enum::fromCharArr<TenorUnit>("C")  == TenorUnit::C);
-        static_assert(Enum::fromCharArr<TenorUnit>("I")  == TenorUnit::I);
-        static_assert(Enum::fromCharArr<TenorUnit>("I2") == TenorUnit::I2);
-
         CHECK(Enum::fromStr<TenorUnit>("D")  == TenorUnit::D);
         CHECK(Enum::fromStr<TenorUnit>("B")  == TenorUnit::B);
         CHECK(Enum::fromStr<TenorUnit>("W")  == TenorUnit::W);
@@ -143,9 +127,6 @@ int main()
 
         static_assert(Enum::flip<PutCallFlag>(PutCallFlag::Call) == PutCallFlag::Put);
         static_assert(Enum::flip<PutCallFlag>(PutCallFlag::Put)  == PutCallFlag::Call);
-
-        static_assert(Enum::fromCharArr<PutCallFlag>("Call") == PutCallFlag::Call);
-        static_assert(Enum::fromCharArr<PutCallFlag>("Put")  == PutCallFlag::Put);
 
         CHECK(Enum::fromStr<PutCallFlag>("Call") == PutCallFlag::Call);
         CHECK(Enum::fromStr<PutCallFlag>("Put")  == PutCallFlag::Put);

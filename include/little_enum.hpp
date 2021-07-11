@@ -44,36 +44,36 @@ namespace little_enum {
 
     struct Enum {
     private:
-        template<class E>
+        template <class E>
         static constexpr auto enum_array();
 
-        template<class E>
+        template <class E>
         static constexpr auto enum_array_v = Enum::enum_array<E>();
         
-        template<class E>
+        template <class E>
         static constexpr size_t count_v = Enum::enum_array_v<E>.size();
 
-        template<class E>
+        template <class E>
         struct Pair {
             std::string_view name;
             E value;
         };
 
     public:
-        // Returns a std::array of (name, value) pairs for the specified enum type
-        template<class E>
+        // Returns a std::array of {name, value} pairs for the specified enum type
+        template <class E>
         static constexpr auto getValuePairs() {
             return Enum::enum_array_v<E>;
         }
 
         // Returns the number of available enum values
-        template <typename E>
+        template <class E>
         static constexpr size_t count() {
             return Enum::enum_array_v<E>.size();
         }
 
         // Converts enum value to std::string_view
-        template <typename E>
+        template <class E>
         static constexpr std::string_view toSv(const E inputEnum) {
             for (const auto& p : Enum::enum_array_v<E>) {
                 if (p.value == inputEnum)
@@ -83,13 +83,13 @@ namespace little_enum {
         }
 
         // Converts enum value to std::string
-        template <typename E>
+        template <class E>
         static std::string toStr(const E inputEnum) {
             return std::string(Enum::toSv(inputEnum));
         }
 
         // Converts enum value to underlying type value
-        template <typename E>
+        template <class E>
         static constexpr std::underlying_type_t<E> toValue(const E inputEnum) {
             return static_cast<std::underlying_type_t<E>>(inputEnum);
         }
@@ -110,17 +110,11 @@ namespace little_enum {
             return Enum::fromSv<E>(inputStr);
         }
 
-        // Converts char array (const char*) to enum value
-        template <class E>
-        static constexpr E fromCharArr(const char* inputCharArr) {
-            return Enum::fromSv<E>(inputCharArr);
-        }
-
         // Converts char to enum value
         template <class E>
         static constexpr E fromChar(const char& inputChar) {
             for (const auto& p : Enum::enum_array_v<E>) {
-                if (p.name.size() == 1 && p.name[0] == inputChar)
+                if (p.name.size() == 1 && p.name.front() == inputChar)
                     return p.value;
             }
             throw std::runtime_error("Unable to convert char '" + std::string(1, inputChar) + "' to an enum value");
