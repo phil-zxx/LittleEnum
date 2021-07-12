@@ -1,4 +1,4 @@
-# LittleEnum [![Build Status](https://travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)](https://travis-ci.com/phil-zxx/LittleEnum)
+# Little Enum [![Build Status](https://travis-ci.com/phil-zxx/LittleEnum.svg?branch=master)](https://travis-ci.com/phil-zxx/LittleEnum)
 Header-Only Smart Enum Implementation for C++17.
 
 ---
